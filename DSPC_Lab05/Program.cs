@@ -1,32 +1,32 @@
 ﻿using System.Diagnostics;
+using System.IO.Pipelines;
 using System.Text;
 using System.Threading.Tasks;
 
 class Program
 {
-    static int vectorSize = 700000000;   // Розмір вектору
+    static int vectorSize = 2128000000;   // Розмір вектору
     static double[] vector = new double[vectorSize]; // Масив елементів вектору
     // Визначаємо кількість доступних процесорів
-    static int processorCount = Environment.ProcessorCount;
-    // static int processorCount = 9; // ручна зміна кількості процесорів
+    // static int processorCount = Environment.ProcessorCount;
+    static int processorCount = 1; // ручна зміна кількості процесорів
 
     static void Main()
     {
-        Console.OutputEncoding = UTF8Encoding.UTF8; // підтримка укр. літер
-        Console.WriteLine("Кількість логічних процесорів на ПК: {0}.",
-                           processorCount);
-
         int numTests = 5; // Кількість тестових запусків
-        double[] results = new double[5]; // час виконання тестових запусків
+        double[] results = new double[numTests]; // час виконання тестових запусків
 
-        Console.WriteLine($"Кількість потоків: {processorCount}");
-        Console.WriteLine("Генерація елементів масиву...");
+        Console.OutputEncoding = UTF8Encoding.UTF8; // підтримка укр. літер
+        Console.WriteLine("Лабораторна робота №5. Паралелізм даних з використанням бібліотеки TPL.");
+        Console.WriteLine("Кількість логічних процесорів на ПК: {0}.", Environment.ProcessorCount);
+        Console.WriteLine("Кількість потоків: {0}.", processorCount);
+        Console.Write($"Генерація елементів масиву[1..{vectorSize}]...");
 
         // Заповнюємо вектор випадковими значеннями
         Random rand = new Random();
         for (int i = 0; i < vectorSize; i++)
         {
-            vector[i] = rand.NextDouble();
+            vector[i] = rand.NextDouble()*10;
         }
 
         Console.WriteLine($"Масив сформовано... \nТестові запуски розпочато...");
@@ -56,22 +56,17 @@ class Program
     {
         double sumOfSquares = 0;
 
-        // Обчислюємо квадрат довжини вектору з використанням Parallel.For та зупинкою 
-        // циклу методом Break
+        // Обчислюємо квадрат довжини вектору з використанням Parallel.For
         Parallel.For(0, vectorSize, new ParallelOptions
         { MaxDegreeOfParallelism = processorCount }, (i, state) =>
         {
-            double partialResult = vector[i] * vector[i];
-            // Забезпечуємо взаємний виключний доступ до змінної sumOfSquares
-            lock (vector)
-            {
-                sumOfSquares += partialResult;
-            }
-
-            if (i == vectorSize - 1)
-            {
-                state.Break(); // Зупиняємо цикл після останньої ітерації
-            }
+            double x = vector[i];
+            sumOfSquares += Math.Sqrt(x * x);
+            sumOfSquares += Math.Sqrt(x * x);
+            sumOfSquares += Math.Sqrt(x * x);
+            sumOfSquares += Math.Sqrt(x * x);
+            sumOfSquares += Math.Sqrt(x * x);
+            sumOfSquares += Math.Sqrt(x * x);
         });
 
         return sumOfSquares;

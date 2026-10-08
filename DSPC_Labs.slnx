@@ -3,7 +3,12 @@
   <Project Path="DSPC_Lab03/DSPC_Lab03.csproj" />
   <Project Path="DSPC_Lab04/DSPC_Lab04.csproj" />
   <Project Path="DSPC_Lab05/DSPC_Lab05.csproj" />
-  <Project Path="DSPC_Lab06/DSPC_Lab06.csproj" />
+  <Project Path="DSPC_Lab06/DSPC_Lab06.csproj" Id="0447e9c1-ebdf-4920-87ed-4bbc74229c39" />
   <Project Path="DSPC_Lab07/DSPC_Lab07.csproj" />
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
   <Project Path="DSPC_Lab01/DSPC_Lab01.csproj" />
 </Solution>
