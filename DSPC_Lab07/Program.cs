@@ -9,7 +9,7 @@ class Program
     static double[] vector = new double[vectorSize]; // Масив елементів вектору
     // Кількість доступних логічних процесорів
     static int degreeOfParallelism = Environment.ProcessorCount;
-    // static int degreeOfParallelism = 4; // або ручне обмеження ступеню паралелізму
+    // static int degreeOfParallelism = 8; // або ручне обмеження ступеню паралелізму
     static int numTests = 3; // кількість тестових запусків
     static double totalExecutionTime = 0.0; // сумарний час виконання запусків
 
@@ -18,18 +18,19 @@ class Program
     {
         // використанням методу AsParallel шаблону PLINQ
         return vector.AsParallel().WithDegreeOfParallelism(degreeOfParallelism)
-                     .Select(x => Math.Sqrt(x * x)+ Math.Sqrt(x * x)+ Math.Sqrt(x * x)+ 
-                     Math.Sqrt(x * x)+ Math.Sqrt(x * x)+ Math.Sqrt(x * x))
-                     .Sum();
+                .Select(x => Math.Sqrt(x * x)+ Math.Sqrt(x * x)+ Math.Sqrt(x * x)+ 
+                Math.Sqrt(x * x)+ Math.Sqrt(x * x)+ Math.Sqrt(x * x))
+                .Sum();
 
         /* упорядкування паралельного виконання запитів PLINQ
          return vector.AsParallel().AsOrdered()
-             .WithDegreeOfParallelism(degreeOfParallelism)
-             .Select(x => x * x)
-             .Sum(); */
+                .WithDegreeOfParallelism(degreeOfParallelism)
+                .Select(x => Math.Sqrt(x * x)+ Math.Sqrt(x * x)+ Math.Sqrt(x * x)+ 
+                Math.Sqrt(x * x)+ Math.Sqrt(x * x)+ Math.Sqrt(x * x))
+                .Sum(); */
     }
 
-    // Паралельна генерація елементів масиву
+    // Паралельна генерація випадкових елементів масиву
     static void GenerateVector()
     {
         using ThreadLocal<Random> random =
@@ -43,13 +44,10 @@ class Program
             part =>
             {
                 int start = part * partSize;
-
                 int end = (part == degreeOfParallelism - 1)
                     ? vectorSize
                     : (part + 1) * partSize;
-
                 Random r = random.Value!;
-
                 for (int i = start; i < end; i++)
                 {
                     vector[i] = r.NextDouble() * 10;
@@ -78,7 +76,6 @@ class Program
             double executionTime = watch.ElapsedMilliseconds;
             Console.WriteLine($"Спроба {i + 1}: довжина вектору {squaredLength:f0}," +
                 $" час виконання = {executionTime} мс.");
-
             totalExecutionTime += executionTime;
         }
 
