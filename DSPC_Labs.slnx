@@ -11,4 +11,9 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="DSPC_Lab01/DSPC_Lab01.csproj" />
+  <Project Path="DSPC_Lab09/DSPC_Lab09_Dispatcher.csproj" Id="29a4a719-6fb1-4757-8716-83e620d3cd58" />
+  <Project Path="DSPC_Lab09_Worker1/DSPC_Lab09_Worker1.csproj" Id="ae1b2dea-7f53-403d-a570-65c05a34bf07" />
+  <Project Path="DSPC_Lab09_Worker2/DSPC_Lab09_Worker2.csproj" Id="1386caa9-f9b8-48f9-b75c-ee81e9b54bd7" />
+  <Project Path="DSPC_Lab09_Worker3/DSPC_Lab09_Worker3.csproj" Id="1a804db9-1400-4539-9844-4e2bd7016acf" />
+  <Project Path="DSPC_Lab09_Worker4/DSPC_Lab09_Worker4.csproj" Id="3f27462e-784d-46cb-8b73-fce013435fd5" />
 </Solution>
